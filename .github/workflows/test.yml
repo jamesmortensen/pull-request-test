@@ -37,6 +37,9 @@ jobs:
       - name: Run a one-line script
         run: echo Hello, world second type!
 
+      # Debug action
+      - uses: hmarr/debug-action@v2
+
       # Runs a set of commands using the runners shell
       - name: Run a multi-line script. Print the event type
         run: |
@@ -46,7 +49,7 @@ jobs:
           echo "Pull request number: " ${{ github.event.pull_request.number }}
           echo "push ref: " ${{ github.event.push.ref }}
           echo "GITHUB_REF: " $GITHUB_REF
-          echo "GitHub Event: " ${{ fromJSON(github.event) }}
+          echo "GitHub Event: " ${{ github.event }}
           echo Add other actions to build,
           echo test, and deploy your project.
           npm i octokit
