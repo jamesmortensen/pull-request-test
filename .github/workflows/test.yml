@@ -5,7 +5,7 @@ name: CI2
 # Controls when the workflow will run
 on:
   # Triggers the workflow on push or pull request events but only for the "main" branch
-  push:
+#  push:
 #    branches: [ "main" ]
 #  pull_request:
 #    branches: [ "main" ]
@@ -87,3 +87,20 @@ jobs:
 
             })();
 
+      - name: Get package name
+        env:
+          PULL_REQUEST_TITLE: ${{ github.event.pull_request.title }}
+        run: |
+          node -p "
+            const title = process.env.PULL_REQUEST_TITLE;
+            const packageName = title.match('\\[(.*)\\]');
+            const fs = require('fs');
+            process.env.PACKAGE_NAME = packageName;
+          "
+          echo "Package name is " $PACKAGE_NAME
+
+      - name: Merged step
+        if: ${{ github.event.pull_request.merged == 'true' && github.base_ref == 'main' }}
+        run: echo merged
+
+          
