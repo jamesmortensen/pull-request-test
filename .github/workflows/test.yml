@@ -44,6 +44,7 @@ jobs:
           echo "push ref: " ${{ github.event.push.ref }}
           echo Add other actions to build,
           echo test, and deploy your project.
+          npm i octokit
   
       - uses: actions/github-script@v6
         id: set-result
