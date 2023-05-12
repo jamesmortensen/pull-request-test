@@ -42,6 +42,8 @@ jobs:
           echo "The Title of your PR is" ${{ github.event.pull_request.title }}
           echo "Pull request number: " ${{ github.event.pull_request.number }}
           echo "push ref: " ${{ github.event.push.ref }}
+          echo "GITHUB_REF: " $GITHUB_REF
+          echo "GitHub Event: " ${{ github.event }}
           echo Add other actions to build,
           echo test, and deploy your project.
           npm i octokit
