@@ -7,8 +7,11 @@ on:
   # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
     branches: [ "main" ]
+#  pull_request:
+#    branches: [ "main" ]
   pull_request:
-    branches: [ "main" ]
+    types: [opened, synchronize, closed]
+
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -43,7 +46,7 @@ jobs:
           echo "Pull request number: " ${{ github.event.pull_request.number }}
           echo "push ref: " ${{ github.event.push.ref }}
           echo "GITHUB_REF: " $GITHUB_REF
-          echo "GitHub Event: " ${{ github.event }}
+          echo "GitHub Event: " ${{ fromJSON(github.event) }}
           echo Add other actions to build,
           echo test, and deploy your project.
           npm i octokit
