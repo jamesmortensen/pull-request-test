@@ -49,7 +49,6 @@ jobs:
         id: set-result
         env:
           PULL_REQUEST_NUMBER: ${{ github.event.pull_request.number }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 	with:
 	  script: |
             const { Octokit } = require('octokit');
