@@ -44,3 +44,38 @@ jobs:
           echo "push ref: " ${{ github.event.push.ref }}
           echo Add other actions to build,
           echo test, and deploy your project.
+          npm i octokit
+  
+      - uses: actions/github-script@v6
+        id: set-result
+        env:
+          PULL_REQUEST_NUMBER: ${{ github.event.pull_request.number }}
+        with:
+          script: |
+            const { Octokit } = require('octokit');
+
+            const owner = 'jamesmortensen';
+            const repo = 'pull-request-test';
+            const pullNumber = process.env.PULL_REQUEST_NUMBER;
+
+            (async () => {
+            // Octokit.js
+            // https://github.com/octokit/core.js#readme
+            const octokit = new Octokit({
+              auth: process.env.GITHUB_TOKEN
+            })
+
+            const response = await octokit.request(`GET /repos/${owner}/${repo}/pulls/${pullNumber}`, {
+              owner: owner,
+              repo: repo,
+              pull_number: pullNumber,
+              headers: {
+                'X-GitHub-Api-Version': '2022-11-28'
+              }
+            })
+
+            // This gets the PR title
+            console.log(response.data.title);
+
+            })();
+
